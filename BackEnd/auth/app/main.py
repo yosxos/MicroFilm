@@ -5,7 +5,7 @@ from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from models import User, UserInDb
+from models import User
 from databases import Database
 
 
