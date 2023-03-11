@@ -18,7 +18,7 @@ export class ProfilComponent implements OnInit {
       this.test_jwt()
     }
     test_jwt(){
-      this._api.getTypeRequest('test-jwt').subscribe((res: any) => {
+      this._api.getTypeRequest('test_jwt').subscribe((res: any) => {
         console.log(res)
 
       }, err => {
