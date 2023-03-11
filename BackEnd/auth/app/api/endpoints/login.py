@@ -21,7 +21,7 @@ async def login(user: User, Authorize: AuthJWT = Depends()):
     
     access_token = Authorize.create_access_token(subject=user.email)
     await InsertToken(user, access_token)
-    return {"access_token": access_token}
+    return await getUser(user)
 
 async def InsertToken(user: User, token: str):
     query="UPDATE users SET token=:token WHERE email=:email"
