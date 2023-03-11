@@ -68,13 +68,13 @@ async def get_user_movies(user_id: int):
     Returns:
         _type_: Movie
     """
-    query="SELECT m.name FROM movies m INNER JOIN user_movie um ON m.id=um.movie_id WHERE um.user_id=:user_id"
+    query="SELECT m,um.watch,um.liked FROM movies m INNER JOIN user_movie um ON m.id=um.movie_id WHERE um.user_id=:user_id"
     values={"user_id": user_id}
     movies= await database.fetch_all(query=query, values=values)
     return movies
 
-@router.post('/{user_id}/Movies/{movie_id}')
-async def add_user_movie(user_id: int, movie_id: int,movie: MovieIn):
+@router.post('/{user_id}/Movies/add')
+async def add_user_movie(user_id: int,movie: MovieIn):
     """ 
     Add a movie to a user
 
@@ -84,12 +84,13 @@ async def add_user_movie(user_id: int, movie_id: int,movie: MovieIn):
         movie (MovieIn): The movie to add
 
     """
-    query="INSERT INTO user_movie (user_id, movie_id,liked,watch) VALUES (:user_id, :movie_id, :liked, :watch)"
-    values={"user_id": user_id, "movie_id": movie_id ,"liked": movie.liked, "watch": movie.watched}
+    query="INSERT INTO user_movie (user_id, movie_id, liked, watch) SELECT :user_id, :movie_id, :liked, :watch WHERE NOT EXISTS (   SELECT 1  FROM user_movie   WHERE user_id = :user_id AND movie_id = :movie_id)"
+
+    values={"user_id": user_id, "movie_id": movie.movie_id ,"liked": movie.liked, "watch": movie.watched}
     await database.execute(query=query, values=values)
     return "Movie added"
 
-@router.delete('/{user_id}/Movies/{movie_id}')
+@router.delete('/{user_id}/Movies/delete/{movie_id}')
 
 async def delete_user_movie(user_id: int, movie_id: int):
     """
@@ -105,8 +106,8 @@ async def delete_user_movie(user_id: int, movie_id: int):
     await database.execute(query=query, values=values)
     return "Movie deleted"
 
-@router.put('/{user_id}/Movies/{movie_id}')
-async def update_user_movie(user_id: int, movie_id: int,movie: MovieIn):
+@router.put('/{user_id}/Movies/update/{movie_id}')
+async def update_user_movie(user_id: int,movie_id:int,movie: MovieIn):
     """
     Update a movie from a user
 
@@ -119,7 +120,7 @@ async def update_user_movie(user_id: int, movie_id: int,movie: MovieIn):
         _type_: Movie
     """
     query="UPDATE user_movie SET liked=:liked, watch=:watch WHERE user_id=:user_id AND movie_id=:movie_id"
-    values={"user_id": user_id, "movie_id": movie_id ,"liked": movie.liked, "watch": movie.watched}
+    values={"user_id": user_id, "movie_id": movie.movie_id ,"liked": movie.liked, "watch": movie.watched}
     await database.execute(query=query, values=values)
     return "Movie updated"
 
@@ -131,12 +132,12 @@ async def get_user_genres(user_id: int):
     Args:
         user_id (int): user id
     """
-    query="SELECT g.name FROM genres g INNER JOIN user_genre ug ON g.id=ug.genre_id WHERE ug.user_id=:user_id"
+    query="SELECT g.name,g.id FROM genres g INNER JOIN user_genre ug ON g.id=ug.genre_id WHERE ug.user_id=:user_id"
     values={"user_id": user_id}
     genres= await database.fetch_all(query=query, values=values)
     return genres
 
-@router.post('/{user_id}/Genres/{genre_id}')
+@router.post('/{user_id}/Genres/add')
 async def add_user_genre(user_id: int, genre_id: int):
     """
     Add a genre to a user
@@ -145,12 +146,12 @@ async def add_user_genre(user_id: int, genre_id: int):
         user_id (int): user id
         genre_id (int): genre id
     """
-    query="INSERT INTO user_genre (user_id, genre_id) VALUES (:user_id, :genre_id)"
+    query="INSERT INTO user_genre (user_id, genre_id) SELECT :user_id, :genre_id WHERE NOT EXISTS ( SELECT 1 FROM user_genre WHERE user_id = :user_id AND genre_id = :genre_id)"
     values={"user_id": user_id, "genre_id": genre_id}
     await database.execute(query=query, values=values)
     return "Genre added"
 
-@router.put('/{user_id}/Genres/{genre_id}')
+@router.put('/{user_id}/Genres/update/{genre_id}')
 async def update_user_genre(user_id: int, genre_id: int,genre_update_id: int):
     """
     Update a genre from a user
@@ -167,7 +168,7 @@ async def update_user_genre(user_id: int, genre_id: int,genre_update_id: int):
     await database.execute(query=query, values=values)
     return "Genre updated"
 
-@router.delete('/{user_id}/Genres/{genre_id}')
+@router.delete('/{user_id}/Genres/delete/{genre_id}')
 async def delete_user_genre(user_id: int, genre_id: int):
     """
     Delete a genre from a user
@@ -189,12 +190,12 @@ async def get_user_groups(user_id: int):
     Args:
         user_id (int): user id
     """
-    query="SELECT g.name FROM groups g INNER JOIN user_group ug ON g.group_id=ug.group_id WHERE ug.user_id=:user_id"
+    query="SELECT g.name,g.id FROM groups g INNER JOIN user_group ug ON g.group_id=ug.group_id WHERE ug.user_id=:user_id"
     values={"user_id": user_id}
     groups= await database.fetch_all(query=query, values=values)
     return groups
 
-@router.post('/{user_id}/Groups/{group_id}')
+@router.post('/{user_id}/Groups/add')
 async def add_user_group(user_id: int, group_id: int):
     """
     Add a group to a user
@@ -203,12 +204,12 @@ async def add_user_group(user_id: int, group_id: int):
         user_id (int): user id
         group_id (int): group id
     """
-    query="INSERT INTO user_group (user_id, group_id) VALUES (:user_id, :group_id)"
+    query="INSERT INTO user_group (user_id, group_id) SELECT :user_id, :group_id WHERE NOT EXISTS (  SELECT 1  FROM user_group  WHERE user_id = :user_id AND group_id = :group_id)"
     values={"user_id": user_id, "group_id": group_id}
     await database.execute(query=query, values=values)
     return "Group added"
 
-@router.put('/{user_id}/Groups/{group_id}')
+@router.put('/{user_id}/Groups/update{group_id}')
 async def update_user_group(user_id: int, group_id: int,group_update_id: int):
     """
     Update a group from a user
@@ -224,7 +225,7 @@ async def update_user_group(user_id: int, group_id: int,group_update_id: int):
     await database.execute(query=query, values=values)
     return "Group updated"
 
-@router.delete('/{user_id}/Groups/{group_id}')
+@router.delete('/{user_id}/Groups/delete/{group_id}')
 async def delete_user_group(user_id: int, group_id: int):
     """
     Delete a group from a user

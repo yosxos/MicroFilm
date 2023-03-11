@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +12,10 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
   form!: FormGroup
   constructor(
-    private _api : ApiService,
     private _auth: AuthService,
     private router: Router,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    private Uservice:UserService
   ) { }
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -27,15 +27,14 @@ export class LoginComponent implements OnInit {
 
   login(){
     let b = this.form.value
-    console.log(b)
-    this._api.postTypeRequest('login', b).subscribe((res: any) => {
+    this._auth.login(b).subscribe((res: any) => {
       console.log(res)
-      if(res.access_token){
-        this._auth.setDataInLocalStorage('token', res.access_token)
-        this.router.navigate(['profil'])
-      }
-    }, err => {
-      console.log(err)
-    });
+      this._auth.setDataInLocalStorage('token', res.token)
+      this.Uservice.user=res
+      console.log("user",this.Uservice.user)
+      this.router.navigate(['/profil'])
+    }
+    )
+
   }
 }
