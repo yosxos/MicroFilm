@@ -3,9 +3,11 @@ from typing import List, Optional
 
 class MovieIn(BaseModel):
     name: str
-    plot: str
-    genres: List[str]
-    casts: List[str]
+    overview: str
+    release_date:str
+    note_average: float
+    poster_path:str
+    genres: List[int]
 
 
 class MovieOut(MovieIn):
@@ -14,6 +16,6 @@ class MovieOut(MovieIn):
 
 class MovieUpdate(MovieIn):
     name: Optional[str] = None
-    plot: Optional[str] = None
-    genres: Optional[List[str]] = None
-    casts: Optional[List[str]] = None
+    overview: Optional[str] = None
+    genres: Optional[List[int]] = None
+    note_average : Optional[float] = None
