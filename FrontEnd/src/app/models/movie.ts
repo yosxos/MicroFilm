@@ -4,6 +4,6 @@ export interface Movie {
   overview: string;
   genres: Array<string>;
   poster_path: string;
-  runtime: number;
+  release_date: number;
   note_average: number;
 }
