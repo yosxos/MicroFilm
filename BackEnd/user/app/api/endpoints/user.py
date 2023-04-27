@@ -190,7 +190,7 @@ async def get_user_groups(user_id: int):
     Args:
         user_id (int): user id
     """
-    query="SELECT g.name,g.id FROM groups g INNER JOIN user_group ug ON g.group_id=ug.group_id WHERE ug.user_id=:user_id"
+    query="SELECT g.name,g.id FROM group g INNER JOIN user_group ug ON g.id=ug.group_id WHERE ug.user_id=:user_id"
     values={"user_id": user_id}
     groups= await database.fetch_all(query=query, values=values)
     return groups
@@ -209,7 +209,7 @@ async def add_user_group(user_id: int, group_id: int):
     await database.execute(query=query, values=values)
     return "Group added"
 
-@router.put('/{user_id}/Groups/update{group_id}')
+@router.put('/{user_id}/Groups/update/{group_id}')
 async def update_user_group(user_id: int, group_id: int,group_update_id: int):
     """
     Update a group from a user
