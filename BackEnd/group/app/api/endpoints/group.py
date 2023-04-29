@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from databases import Database
 
 
-DATABASE_URL = 'postgresql://cillian:root@localhost/movie_app_db'
+DATABASE_URL = 'postgresql://postgres:198650@localhost/movie_app_db'
 database=Database(DATABASE_URL)
 
 router = APIRouter(

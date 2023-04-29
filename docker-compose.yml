@@ -1,0 +1,59 @@
+version: '3.7'
+
+services:
+  auth_service:
+    build: ./Backend/auth
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./auth-service/:/app/
+    ports:
+      - 8000:8000
+
+  db:
+    image: postgres:12.1-alpine
+    volumes:
+      - postgres_db:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=198650
+      - POSTGRES_DB=movie_app_db
+
+  user_service:
+    build: ./Backend/user
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./user-service/:/app/
+    ports:
+      - 8002:8000
+
+  group_service:
+    build: ./Backend/group
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./group-service/:/app/
+    ports:
+      - 8003:8080
+      
+  data_service:
+    build: ./Backend/user
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./data-service/:/app/
+    ports:
+      - 8004:8000
+
+  angular:
+    image: node:18.13.0-alpine
+    working_dir: /Frontend
+    ports:
+      - target: 4200
+        published: 4200
+    volumes:
+      - type: bind
+        source: ./Frontend
+        target: /Frontend
+    command: npm start
+
+volumes:
+  postgres_data_movie:
+  postgres_data_cast:

@@ -4,7 +4,7 @@ from sqlalchemy import select, insert
 from db import movies, genre
 
 
-DATABASE_URI = 'postgresql://cillian:root@localhost/movie_app_db'
+DATABASE_URI = 'postgresql://postgres:198650@localhost/movie_app_db'
 
 api_key = '1f0343b182ed839f73d76a47cb67adc4'
 
