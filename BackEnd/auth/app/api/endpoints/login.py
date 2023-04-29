@@ -3,9 +3,9 @@ from fastapi import APIRouter, HTTPException, Depends, Request
 from databases import Database
 from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
+import os
 
-
-DATABASE_URL = 'postgresql://postgres:198650@localhost/movie_app_db'
+DATABASE_URL = os.getenv('DATABASE_URL')
 database=Database(DATABASE_URL)
 router = APIRouter(
     prefix="/login",
