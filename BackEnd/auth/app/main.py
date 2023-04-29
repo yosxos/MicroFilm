@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.endpoints.login import router as login_router
 from api.endpoints.test_jwt import router as test_jwt_router
 from api.endpoints.login import database
-
+import uvicorn
 app = FastAPI()
 
 origins = [
@@ -46,3 +46,6 @@ def authjwt_exception_handler(request: Request, exc: AuthJWTException):
 
 app.include_router(login_router)
 app.include_router(test_jwt_router)
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)

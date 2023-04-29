@@ -2,13 +2,13 @@ import requests
 from databases import Database
 from sqlalchemy import select, insert
 from db import movies, genre
+import os
 
-
-DATABASE_URI = 'postgresql://cillian:root@localhost/movie_app_db'
+DATABASE_URL = os.getenv('DATABASE_URL')
 
 api_key = '1f0343b182ed839f73d76a47cb67adc4'
 
-database = Database(DATABASE_URI)
+database = Database(DATABASE_URL)
 
 
 # On récupère les genres de l'API TMDB

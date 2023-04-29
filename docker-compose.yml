@@ -1,0 +1,61 @@
+version: '3.7'
+
+services:
+  auth:
+    build: ./Backend/auth
+    command: python main.py
+    ports:
+      - 8001:8000
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db
+  db:
+    image: postgres:12.1-alpine
+    volumes:
+      - postgres_db:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=198650
+      - POSTGRES_DB=movie_app_db
+
+  user:
+    build: ./Backend/user
+    command: python main.py
+    ports:
+      - 8002:8000
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db
+  group:
+    build: ./Backend/group
+    command: python main.py
+    ports:
+      - 8003:8000
+    depends_on:
+      - db  
+    environment:
+      - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db
+  data:
+    build: ./Backend/data
+    command: python main.py
+    ports:
+      - 8004:8000
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db
+
+  frontend:
+    build: ./Frontend
+    ports:
+      - 4200:80
+    depends_on:
+      - auth
+      - user
+      - group
+      - data
+    
+volumes:
+  postgres_db:
