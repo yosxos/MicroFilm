@@ -9,7 +9,7 @@ services:
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db?dialect=postgresql
+      - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db
   db:
     image: postgres:12.1-alpine
     volumes:
@@ -27,7 +27,7 @@ services:
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db?dialect=postgresql
+      - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db
   group:
     build: ./Backend/group
     command: python main.py
@@ -36,7 +36,7 @@ services:
     depends_on:
       - db  
     environment:
-      - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db?dialect=postgresql  
+      - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db
   data:
     build: ./Backend/data
     command: python main.py
