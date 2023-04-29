@@ -1,9 +1,8 @@
 from api.models.group_model import GroupOut,GroupIn
 from fastapi import APIRouter, Depends, HTTPException, status
 from databases import Database
-
-
-DATABASE_URL = 'postgresql://postgres:198650@localhost/movie_app_db'
+import os
+DATABASE_URL = os.getenv('DATABASE_URL')
 database=Database(DATABASE_URL)
 
 router = APIRouter(

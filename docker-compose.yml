@@ -1,14 +1,15 @@
 version: '3.7'
 
 services:
-  auth_service:
+  auth:
     build: ./Backend/auth
-    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-    volumes:
-      - ./auth-service/:/app/
+    command: python main.py
     ports:
-      - 8000:8000
-
+      - 8001:8000
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db?dialect=postgresql
   db:
     image: postgres:12.1-alpine
     volumes:
@@ -18,42 +19,43 @@ services:
       - POSTGRES_PASSWORD=198650
       - POSTGRES_DB=movie_app_db
 
-  user_service:
+  user:
     build: ./Backend/user
-    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-    volumes:
-      - ./user-service/:/app/
+    command: python main.py
     ports:
       - 8002:8000
-
-  group_service:
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db?dialect=postgresql
+  group:
     build: ./Backend/group
-    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-    volumes:
-      - ./group-service/:/app/
+    command: python main.py
     ports:
-      - 8003:8080
-      
-  data_service:
-    build: ./Backend/user
-    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-    volumes:
-      - ./data-service/:/app/
+      - 8003:8000
+    depends_on:
+      - db  
+    environment:
+      - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db?dialect=postgresql  
+  data:
+    build: ./Backend/data
+    command: python main.py
     ports:
       - 8004:8000
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db
 
-  angular:
-    image: node:18.13.0-alpine
-    working_dir: /Frontend
+  frontend:
+    build: ./Frontend
     ports:
-      - target: 4200
-        published: 4200
-    volumes:
-      - type: bind
-        source: ./Frontend
-        target: /Frontend
-    command: npm start
-
+      - 4200:80
+    depends_on:
+      - auth
+      - user
+      - group
+      - data
+    
 volumes:
-  postgres_data_movie:
-  postgres_data_cast:
+  postgres_db:

@@ -1,13 +1,12 @@
-import requests
 from sqlalchemy.orm import relationship
 from sqlalchemy import (Column, ForeignKey, Text, Boolean, ForeignKeyConstraint, Integer, MetaData, String, Table, Float, create_engine, ARRAY)
 from sqlalchemy import insert, select
 from databases import Database
+import os
+DATABASE_URL = os.getenv('DATABASE_URL')
 
-DATABASE_URI = 'postgresql://postgres:198650@localhost/movie_app_db'
-
-
-engine = create_engine(DATABASE_URI)
+database = Database(DATABASE_URL)
+engine = create_engine(DATABASE_URL)
 metadata = MetaData()
 
 movies = Table(
@@ -71,5 +70,5 @@ user_movie = Table(
 )
 
 
-database = Database(DATABASE_URI)
+
 
