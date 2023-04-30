@@ -67,7 +67,9 @@ user_movie = Table(
     Column('watch',Boolean),
     Column('like',Boolean)
     
+
 )
+
 
 
 

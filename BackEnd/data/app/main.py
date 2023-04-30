@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from api.movies import movies
 from api.db import metadata, database, engine
 import uvicorn
-
+from api.tmdb import main
 metadata.create_all(engine)
 
 app = FastAPI()
@@ -10,6 +10,7 @@ app = FastAPI()
 @app.on_event("startup")
 async def startup():
     await database.connect()
+    await main() # Call the main function from your script
 
 @app.on_event("shutdown")
 async def shutdown():
