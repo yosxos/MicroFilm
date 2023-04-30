@@ -1,0 +1,100 @@
+/* Le conteneur pour les cartes de films */
+.movie-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+  }
+  
+  /* La carte de film elle-même */
+  .movie-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 70vh;
+    width: 70vw;
+    max-width: 400px;
+    max-height: 600px;
+    border-radius: 1rem;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Les boutons pour les actions sur les films */
+  .movie-card-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+  }
+  
+  /* Les informations détaillées sur le film */
+  .movie-card-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 1rem;
+    height: 50%;
+    color: white;
+    text-align: center;
+  }
+  
+  /* Le titre du film */
+  .movie-card-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Les genres du film */
+  .movie-card-genres {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  /* Chaque genre du film */
+  .movie-card-genres span {
+    margin: 0.2rem;
+    padding: 0.2rem 0.5rem;
+    background-color: white;
+    border-radius: 0.2rem;
+    font-size: 0.8rem;
+    color: black;
+  }
+  
+  /* Styles des boutons */
+  .btn {
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  
+  /* Bouton "Like" */
+  .btn-like {
+    background-color: #47b25d;
+    color: white;
+  }
+  
+  /* Bouton "Dislike" */
+  .btn-dislike {
+    background-color: #dd2c2c;
+    color: white;
+  }
+  
+  /* Bouton "Not Watched" */
+  .btn-not-watched {
+    background-color: #f0b429;
+    color: white;
+  }
+  
+  /* Bouton "Info" */
+  .btn-info {
+    background-color: white;
+    color: black;
+  }
+  

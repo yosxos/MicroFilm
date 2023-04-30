@@ -22,6 +22,9 @@ FROM nginx:alpine
 # Copy the built app from the previous stage to the Nginx document root
 COPY --from=build /app/dist/movie-app /usr/share/nginx/html
 
+# Copy the Nginx configuration file to the configuration directory
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Expose port 80
 EXPOSE 80
 
