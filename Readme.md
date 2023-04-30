@@ -15,6 +15,7 @@ In the root of the project excecute `docker-compose build` to build the docker a
 - Data: http://localhost:8004
 - User: http://localhost:8002
 - Group: http://localhost:8003
+- front: http://localhost:4200
 - UserSuggestion: 
 # Left to do
 - Liked/Disliked
