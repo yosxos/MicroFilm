@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-profil',
@@ -7,18 +8,23 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./profil.component.css']
 })
 export class ProfilComponent implements OnInit {
+  user: User = {} as User;
+  message: string = '';
 
-    constructor(
-      private _auth: AuthService,
-    ) { }
+  constructor(private userService: UserService) { }
 
-    ngOnInit(): void {
-      this.test_jwt()
-    }
-    test_jwt(){
-      this._auth.checkToken().subscribe((res: any) => {
-        console.log(res)
-      })
-    }
+  ngOnInit(): void {
+    this.userService.getUser();
+    this.user = this.userService.user;
+  }
 
+  updateUser(): void {
+    this.userService.updateUser(this.user);
+    this.message = 'Vos informations ont été mises à jour avec succès.';
+  }
+
+  deleteUser(): void {
+    this.userService.deleteUser();
+    this.message = 'Votre compte a été supprimé avec succès.';
+  }
 }

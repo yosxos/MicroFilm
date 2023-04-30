@@ -7,20 +7,30 @@ import { LoginComponent } from './pages/login/login.component';
 import { ProfilComponent } from './pages/profil/profil.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './securite/auth.interceptor';
+import { MovieCardComponent } from './pages/moviecard/moviecard.component';
+import { UserLikeComponent } from './pages/userlike/userlike.component';
+import { RouterModule } from '@angular/router';
+import { GroupComponent } from './pages/group/group.component'; // Import RouterModule
+
 
 @NgModule({
-  declarations: [
+  declarations:
+  [
     AppComponent,
     LoginComponent,
     ProfilComponent,
-
-  ],
+    MovieCardComponent,
+    UserLikeComponent,
+    GroupComponent
+],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule,
+    BrowserModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

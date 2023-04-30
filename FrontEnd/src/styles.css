@@ -1,7 +1,66 @@
-/* You can add global styles to this file, and also import other style files */
-* {
+/* You can add global styles to this file, and also import other style files 
+ {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+*/
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #141414;
+  color: rgb(126, 29, 29);
+  padding: 1.2rem;
+}
 
+.logo img {
+  width: 66px;
+  height: 56px;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  margin-right: 1rem;
+}
+
+nav li:last-child {
+  margin-right: 0;
+}
+
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.search input[type="text"] {
+  border: none;
+  border-radius: 3px;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.search button {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  padding: 0.5rem 1rem;
+  color: #141414;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.search button:hover {
+  background-color: #f2f2f2;
+}

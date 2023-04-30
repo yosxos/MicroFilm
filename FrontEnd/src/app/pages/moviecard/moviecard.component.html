@@ -1,0 +1,22 @@
+<div class="movie-card-container" *ngFor="let movie of movies$ | async">
+    <div class="movie-card" [style.background-image]="'url(' + movie.poster_path + ')'">
+      <div class="movie-card-buttons">
+        <button class="btn btn-like" (click)="like(movie)">Like</button>
+        <button class="btn btn-dislike" (click)="dislike(movie)">Dislike</button>
+        <button class="btn btn-not-watched" (click)="markAsUnwatched(movie)">Not Watched</button>
+        <button class="btn btn-info" (click)="showDetails(movie)">Info</button>
+      </div>
+      <div class="movie-card-info" *ngIf="showDetailsFlag">
+        <h3 class="movie-card-title">{{ movie.name }}</h3>
+        <div class="movie-card-genres">
+          <span *ngFor="let genre of genres">{{ genre.name }}</span>
+        </div>
+        <p class="movie-card-overview">{{ movie.overview }}</p>
+        <p class="movie-card-release-date">{{ movie.release_date }}</p>
+        <p class="movie-card-average-note">{{ movie.note_average }}</p>
+      </div>
+      
+    </div>
+</div>
+  
+  

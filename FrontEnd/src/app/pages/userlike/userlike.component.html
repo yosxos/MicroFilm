@@ -1,0 +1,16 @@
+<div class="user-like">
+    <h2>Mes films aimés</h2>
+    <div class="user-like-movies">
+      <div *ngFor="let userMovie of userMovies" class="user-like-movie">
+        <img [src]="userMovie.movie.poster_path" alt="{{userMovie.movie.name}} poster">
+        <div class="user-like-movie-info">
+          <h3>{{userMovie.movie.name}}</h3>
+          <p>{{userMovie.movie.overview}}</p>
+          <p>Genres : {{userMovie.movie.genres.join(', ')}}</p>
+          <p>Note moyenne : {{userMovie.movie.note_average}}</p>
+          <p>Regardé : {{userMovie.watch ? 'Oui' : 'Non'}}</p>
+          <p>Aimé : {{userMovie.liked ? 'Oui' : 'Non'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
