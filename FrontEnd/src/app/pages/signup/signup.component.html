@@ -1,0 +1,23 @@
+<div id="wrapper">
+  <div id="right">
+    <div id="showcase">
+    </div>
+  </div>
+  <div id="left">
+    <div id="signup-wrapper">
+      <form (ngSubmit)="signUp()">
+        <label>Email</label>
+        <input type="text" name="email" [(ngModel)]="email" required email>
+        <label>Name</label>
+        <input type="text" name="firstName" [(ngModel)]="name" required>
+        <label>Password</label>
+        <input type="password" name="password" [(ngModel)]="password" required>
+        <label>Confirm Password</label>
+        <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" required>
+        <div>
+          <button type="submit" [disabled]="!isValidForm()">Sign Up</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
