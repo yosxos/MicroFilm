@@ -11,9 +11,18 @@ The frontend of the project is developed using Angular. Each service is containe
 # How to run 
 ## Local:
 In the root of the project excecute `docker-compose build` to build the docker and then run it with `docker-compose up -d`
-## Online 
-The project will be hosted in this link : for a period of : 
+- Auth: http://localhost:8001
+- Data: http://localhost:8004
+- User: http://localhost:8002
+- Group: http://localhost:8003
+- UserSuggestion: 
+# Left to do
+- Liked/Disliked
+- Algo Preferences
+- User Groups front(front)
+- User liked movies (front)
 # Groupe:
 - Yassir AIT TMILLA
 - Cillian   ROSAY
 - Yassine   Alami
+ 
