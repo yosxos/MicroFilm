@@ -69,7 +69,7 @@ async def get_user_movies(user_id: int):
     Returns:
         _type_: Movie
     """
-    query="SELECT m,um.watch,um.liked FROM movies m INNER JOIN user_movie um ON m.id=um.movie_id WHERE um.user_id=:user_id"
+    query="SELECT m,um.watch,um.like FROM movies m INNER JOIN user_movie um ON m.id=um.movie_id WHERE um.user_id=:user_id"
     values={"user_id": user_id}
     movies= await database.fetch_all(query=query, values=values)
     return movies
@@ -85,9 +85,9 @@ async def add_user_movie(user_id: int,movie: MovieIn):
         movie (MovieIn): The movie to add
 
     """
-    query="INSERT INTO user_movie (user_id, movie_id, liked, watch) SELECT :user_id, :movie_id, :liked, :watch WHERE NOT EXISTS (   SELECT 1  FROM user_movie   WHERE user_id = :user_id AND movie_id = :movie_id)"
+    query="INSERT INTO user_movie (user_id, movie_id, like, watch) SELECT :user_id, :movie_id, :like, :watch WHERE NOT EXISTS (   SELECT 1  FROM user_movie   WHERE user_id = :user_id AND movie_id = :movie_id)"
 
-    values={"user_id": user_id, "movie_id": movie.movie_id ,"liked": movie.liked, "watch": movie.watched}
+    values={"user_id": user_id, "movie_id": movie.movie_id ,"like": movie.liked, "watch": movie.watched}
     await database.execute(query=query, values=values)
     return "Movie added"
 
@@ -120,8 +120,8 @@ async def update_user_movie(user_id: int,movie_id:int,movie: MovieIn):
     Returns:
         _type_: Movie
     """
-    query="UPDATE user_movie SET liked=:liked, watch=:watch WHERE user_id=:user_id AND movie_id=:movie_id"
-    values={"user_id": user_id, "movie_id": movie.movie_id ,"liked": movie.liked, "watch": movie.watched}
+    query="UPDATE user_movie SET like=:like, watch=:watch WHERE user_id=:user_id AND movie_id=:movie_id"
+    values={"user_id": user_id, "movie_id": movie.movie_id ,"like": movie.liked, "watch": movie.watched}
     await database.execute(query=query, values=values)
     return "Movie updated"
 

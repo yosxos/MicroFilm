@@ -11,7 +11,8 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { MovieCardComponent } from './pages/moviecard/moviecard.component';
 import { UserLikeComponent } from './pages/userlike/userlike.component';
 import { RouterModule } from '@angular/router';
-import { GroupComponent } from './pages/group/group.component'; // Import RouterModule
+import { GroupComponent } from './pages/group/group.component';
+import { HeaderComponent } from './pages/header/header.component'; // Import RouterModule
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { GroupComponent } from './pages/group/group.component'; // Import Router
     SignupComponent,
     MovieCardComponent,
     UserLikeComponent,
-    GroupComponent
+    GroupComponent,
+    HeaderComponent
 ],
   imports: [
     BrowserModule,

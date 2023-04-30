@@ -8,14 +8,13 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./profil.component.css']
 })
 export class ProfilComponent implements OnInit {
-  user: User = {} as User;
+  
   message: string = '';
 
   constructor(private userService: UserService) { }
-
+  user: User = this.userService.user;
   ngOnInit(): void {
-    this.userService.getUser();
-    this.user = this.userService.user;
+
   }
 
   updateUser(): void {

@@ -27,11 +27,12 @@ export class MovieCardComponent implements OnInit {
   ngOnInit(): void {}
 
   like(movie: Movie): void {
-    this.userService.addUserMovie({ movie, liked: true, watch: false });
+  
+    this.userService.addUserMovie({ movie, liked: true, watch: true });
   }
 
   dislike(movie: Movie): void {
-    const userMovie: UserMovie = { movie: { id: movie.id } as Movie, liked: false, watch: false };
+    const userMovie: UserMovie = { movie, liked: false, watch: true };
     this.userService.deleteUserMovie(userMovie);
   }
 
