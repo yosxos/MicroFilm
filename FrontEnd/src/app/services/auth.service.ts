@@ -8,9 +8,10 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
 API_URL = 'http://localhost:8001/';
 constructor(private httpClient:HttpClient) { }
-
+connected: boolean = false;
 // authentification
 login(user: any) {
+    this.connected = true;
     return this.httpClient.post(this.API_URL+"login", user);
 }
 //check tocken
@@ -31,4 +32,11 @@ getToken() {
 clearStorage() {
     localStorage.clear();
 }
+logout() {
+    this.connected = false;
+    this.clearStorage();
+    
 }
+
+}
+

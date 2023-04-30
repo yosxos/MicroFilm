@@ -12,7 +12,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class UserService {
 
-  constructor(private httpCLient: HttpClient) { }
+  constructor(private httpCLient: HttpClient) {
+    this.getUser();
+   }
   URL = 'http://localhost:8002/user/';
   user: User = <User>{}
   user_movies: Array<UserMovie> = []
@@ -21,11 +23,19 @@ export class UserService {
 
   userMoviesSubject: BehaviorSubject<UserMovie[]> = new BehaviorSubject<UserMovie[]>([]);
   public userMovies: Observable<UserMovie[]> = this.userMoviesSubject.asObservable();
-  
-  //Create a user in the backend
-  createUser(user: User) {
-    this.httpCLient.post<User>(this.URL+'create', user)
-  }
+
+//Create a user in the backend
+createUser(user: User) {
+  this.httpCLient.post<User>(this.URL+'create', user)
+    .subscribe(
+      (response) => {
+        console.log('User created successfully', response);
+      },
+      (error) => {
+        console.log('Error creating user', error);
+      }
+    );
+}
   
   
   // Get a user by id from the backend
@@ -42,7 +52,7 @@ export class UserService {
     }
     )
   }
-  // Delete a user by id from the backend
+  // Delete a user by id from the backendh
   deleteUser() {
     this.httpCLient.delete<User>(this.URL +"/delete/"+ this.user.id).subscribe((res: User) => {
       this.user = <User>{}
@@ -58,7 +68,7 @@ export class UserService {
   
   // Add a movie to the user from the backend
   addUserMovie(newMovie: UserMovie) {
-    let payload={"movie_id":newMovie.movie.id,"watch":newMovie.watch,"liked":newMovie.liked}
+    let payload={"movie_id":newMovie.movie.id,"watched":newMovie.watch,"liked":newMovie.liked}
     this.httpCLient.post<UserMovie>(this.URL + this.user.id + '/Movies/add', payload).subscribe((res: UserMovie) => {
       this.user_movies.push(res)
     }
@@ -66,7 +76,7 @@ export class UserService {
   }
   // Update a movie to the user from the backend
   updateUserMovie(newMovie: UserMovie) {
-    let payload={"movie_id":newMovie.movie.id,"watch":newMovie.watch,"liked":newMovie.liked}
+    let payload={"movie_id":newMovie.movie.id,"watched":newMovie.watch,"liked":newMovie.liked}
     this.httpCLient.put<UserMovie>(this.URL + this.user.id + '/Movies/update/' + newMovie.movie.id, payload).subscribe((res: UserMovie) => {
       this.user_movies.filter((m) => m.movie.id != newMovie.movie.id)
       this.user_movies.push(res)

@@ -10,7 +10,9 @@ import { map } from 'rxjs/operators';
 })
 export class MovieService {
 
-  constructor(private httpCLient: HttpClient) { }
+  constructor(private httpCLient: HttpClient) {
+    this.getMovies();
+   }
   URL = 'http://localhost:8004/api/v1/movies';
 
   movies: Array<Movie> = []
@@ -21,7 +23,7 @@ export class MovieService {
 
   //Get all movies
   getMovies() {
-    this.httpCLient.get<Movie[]>(this.URL + 'movies').subscribe((res: Movie[]) => {
+    this.httpCLient.get<Movie[]>(this.URL).subscribe((res: Movie[]) => {
       this.movies = res;
       this.moviesSubject.next(this.movies);
     })
