@@ -12,7 +12,7 @@ import { UserMovie } from '../models/user-movie';
 export class UserService {
 
   constructor(private httpCLient: HttpClient) { }
-  URL = 'http://localhost:8002/';
+  URL = 'http://localhost:8002/user/';
   user: User = <User>{}
   user_movies: Array<UserMovie> = []
   user_groups: Array<Group> = []
@@ -20,6 +20,14 @@ export class UserService {
   //Create a user in the backend
   createUser(user: User) {
     this.httpCLient.post<User>(this.URL+'create', user)
+      .subscribe(
+        (response) => {
+          console.log('User created successfully', response);
+        },
+        (error) => {
+          console.log('Error creating user', error);
+        }
+      );
   }
   // Get a user by id from the backend
   getUser() {

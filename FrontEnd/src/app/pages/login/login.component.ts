@@ -15,7 +15,8 @@ export class LoginComponent implements OnInit {
     private _auth: AuthService,
     private router: Router,
     public fb: FormBuilder,
-    private Uservice:UserService
+    private Uservice:UserService,
+
   ) { }
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -37,4 +38,8 @@ export class LoginComponent implements OnInit {
     )
 
   }
+  goToSignUp() {
+    this.router.navigate(['/signup']);
+  }
+
 }

@@ -1,9 +1,22 @@
 from fastapi import FastAPI
 from databases import Database
+from fastapi.middleware.cors import CORSMiddleware
 from api.endpoints import user
 from api.endpoints.user import database
 import uvicorn
 app = FastAPI()
+origins = [
+    "http://localhost",
+    "http://localhost:4200",
+    "http://localhost:80",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.on_event("startup")
 async def startup():

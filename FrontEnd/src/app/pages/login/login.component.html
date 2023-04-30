@@ -1,24 +1,20 @@
 <div id="wrapper" >
   <div id="right">
-    <div id="showcase">
-
-    </div>
+    <div id="showcase"></div>
   </div>
   <div id="left">
     <h1>Archi Movies</h1>
     <div id="signin-wrapper">
       <form [formGroup]='form' (ngSubmit)='login()'>
         <label>Email</label>
-        <input type='text' formControlName='email' [@inputFocus]>
+        <input type='text' formControlName='email'>
         <label>Password</label>
-        <input type='password' formControlName='password' [@inputFocus]>
+        <input type='password' formControlName='password'>
         <div>
-          <button type='submit' [disabled]='!this.form.valid' [@buttonAnimation]>Login</button>
+          <button type='submit' [disabled]='!form.valid'>Login</button>
+          <button type='button' (click)='goToSignUp()'>Sign Up</button>
         </div>
       </form>
     </div>
   </div>
-
-
 </div>
-
