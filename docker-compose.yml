@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   auth:
-    build: ./Backend/auth
+    build: ./BackEnd/auth
     command: python main.py
     ports:
       - 8001:8000
@@ -29,7 +29,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db
   group:
-    build: ./Backend/group
+    build: ./BackEnd/group
     command: python main.py
     ports:
       - 8003:8000
@@ -38,7 +38,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db
   data:
-    build: ./Backend/data
+    build: ./BackEnd/data
     command: python main.py
     ports:
       - 8004:8000
@@ -48,7 +48,7 @@ services:
       - DATABASE_URL=postgresql://postgres:198650@db/movie_app_db
 
   frontend:
-    build: ./Frontend
+    build: ./FrontEnd
     ports:
       - 4200:80
     depends_on:
