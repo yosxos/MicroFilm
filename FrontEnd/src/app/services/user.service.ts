@@ -12,7 +12,7 @@ import { UserMovie } from '../models/user-movie';
 export class UserService {
 
   constructor(private httpCLient: HttpClient) { }
-  URL = 'http://localhost:8060/';
+  URL = 'http://localhost:8002/';
   user: User = <User>{}
   user_movies: Array<UserMovie> = []
   user_groups: Array<Group> = []

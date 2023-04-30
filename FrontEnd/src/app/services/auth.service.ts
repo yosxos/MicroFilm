@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
-API_URL = 'http://localhost:8000/';
+API_URL = 'http://localhost:8001/';
 constructor(private httpClient:HttpClient) { }
 
 // authentification
