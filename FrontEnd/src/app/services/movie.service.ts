@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 export class MovieService {
 
   constructor(private httpCLient: HttpClient) { }
-  URL = 'http://localhost:8003/';
+  URL = 'http://localhost:8004/api/v1/movies';
 
   movies: Array<Movie> = []
   genres: Array<Genre> = []

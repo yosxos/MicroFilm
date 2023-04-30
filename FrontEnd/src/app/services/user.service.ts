@@ -5,6 +5,7 @@ import { Movie } from '../models/movie';
 import { Group } from '../models/group';
 import { Genre } from '../models/genre';
 import { UserMovie } from '../models/user-movie';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,18 +18,16 @@ export class UserService {
   user_movies: Array<UserMovie> = []
   user_groups: Array<Group> = []
   user_genres: Array<Genre> = []
+
+  userMoviesSubject: BehaviorSubject<UserMovie[]> = new BehaviorSubject<UserMovie[]>([]);
+  public userMovies: Observable<UserMovie[]> = this.userMoviesSubject.asObservable();
+  
   //Create a user in the backend
   createUser(user: User) {
     this.httpCLient.post<User>(this.URL+'create', user)
-      .subscribe(
-        (response) => {
-          console.log('User created successfully', response);
-        },
-        (error) => {
-          console.log('Error creating user', error);
-        }
-      );
   }
+  
+  
   // Get a user by id from the backend
   getUser() {
     this.httpCLient.get<User>(this.URL + this.user.id).subscribe((res: User) => {
@@ -51,13 +50,12 @@ export class UserService {
     }
     )
   }
-  // Get all movies of the user from the backend
   getUserMovies() {
-    this.httpCLient.get<UserMovie>(this.URL + this.user.id + '/Movies').subscribe((res: UserMovie) => {
-      this.user_movies.push(res)
-    }
-    )
+    this.httpCLient.get<UserMovie[]>(this.URL + this.user.id + '/Movies').subscribe((res: UserMovie[]) => {
+      this.userMoviesSubject.next(res);
+    });
   }
+  
   // Add a movie to the user from the backend
   addUserMovie(newMovie: UserMovie) {
     let payload={"movie_id":newMovie.movie.id,"watch":newMovie.watch,"liked":newMovie.liked}
@@ -83,6 +81,7 @@ export class UserService {
     )
 
   }
+  /*
   //Get user Groups
   getUserGroups() {
     this.httpCLient.get<Group>(this.URL + this.user.id.toString+ '/Groups').subscribe((res: Group) => {
@@ -114,6 +113,23 @@ export class UserService {
     )
 
   }
+  */
+  getUserGroups(): Observable<Group[]> {
+    return this.httpCLient.get<Group[]>(this.URL + this.user.id.toString() + '/Groups');
+}
+ 
+  addUserGroup(group: Group): Observable<Group> {
+    return this.httpCLient.post<Group>(this.URL + this.user.id.toString()+ '/Groups/add', group.id);
+}
+
+updateUserGroup(group: Group, newGroup: Group): Observable<Group> {
+    return this.httpCLient.put<Group>(this.URL + this.user.id.toString() + '/Groups/update' + group.id.toString(), newGroup.id);
+}
+
+deleteUserGroup(group: Group): Observable<Group> {
+    return this.httpCLient.delete<Group>(this.URL + this.user.id.toString() + '/Groups/delete' + group.id);
+}
+
 //Get genres of the user
   getUserGenres() {
     this.httpCLient.get<Genre>(this.URL + this.user.id + '/Genres').subscribe((res: Genre) => {
@@ -128,6 +144,7 @@ export class UserService {
     }
     )
   }
+  
   //Update a genre to the user from the backend
   updateUserGenre(genre: Genre, newGenre: Genre) {
 
@@ -148,3 +165,5 @@ export class UserService {
 
 
 }
+
+
