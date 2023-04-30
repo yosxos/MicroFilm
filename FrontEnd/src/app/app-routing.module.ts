@@ -12,11 +12,11 @@ const routes: Routes = [
 { path: '', redirectTo: 'login', pathMatch: 'full' },
 { path:'login', component: LoginComponent},
 { path:'signup', component: SignupComponent},
-{ path: 'profil', component: ProfilComponent },
+{ path:'profil',component:ProfilComponent,canActivate:[AuthguardGuard] },
 { path: 'moviecard', component: MovieCardComponent },
 { path: 'userlike', component: UserLikeComponent },
 { path: 'group', component: GroupComponent },
-/*{ path:'profil',component:ProfilComponent,canActivate:[AuthguardGuard] }*/
+
 ];
 
 @NgModule({
