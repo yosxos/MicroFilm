@@ -1,7 +1,7 @@
 import requests
 from databases import Database
 from sqlalchemy import select, insert
-from db import movies, genre
+from api.db import movies, genre
 import os
 
 DATABASE_URL = os.getenv('DATABASE_URL')
@@ -46,20 +46,29 @@ async def insert_movies(movies_table, movies):
             
 
 async def main():
-    await database.connect()
     genres_list = await get_genres(api_key)
     await insert_genres(genre, genres_list)
-    for pagePopular in range(0, 340): # Récupération des 20 premières pages de films populaires
+    for pagePopular in range(1, 10): # Récupération des 20 premières pages de films populaires
         response = requests.get(f'https://api.themoviedb.org/3/movie/popular?api_key={api_key}&language=fr-FR&page={pagePopular}')
-        movies_list = response.json()['results']
+        if response.status_code != 200:
+            print(f"Error retrieving popular movies page {pagePopular}. Response code: {response.status_code}")
+            continue
+        try:
+            movies_list = response.json()['results']
+        except KeyError:
+            print(f"Error retrieving popular movies page {pagePopular}. Response json does not contain 'results' key.")
+            print(response.json())
+            continue
         await insert_movies(movies, movies_list)
-    for pageTopRated in range(0,340):
+    for pageTopRated in range(0,10):
         response = requests.get(f'https://api.themoviedb.org/3/movie/top_rated?api_key={api_key}&language=fr-FR&page={pageTopRated}')
-        movies_list = response.json()['results']
+        if response.status_code != 200:
+            print(f"Error retrieving top rated movies page {pageTopRated}. Response code: {response.status_code}")
+            continue
+        try:
+            movies_list = response.json()['results']
+        except KeyError:
+            print(f"Error retrieving top rated movies page {pageTopRated}. Response json does not contain 'results' key.")
+            print(response.json())
+            continue
         await insert_movies(movies, movies_list)
-    await database.disconnect()
-
-if __name__ == "__main__":
-    import asyncio
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
