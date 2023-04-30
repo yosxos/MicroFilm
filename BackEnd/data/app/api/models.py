@@ -7,12 +7,11 @@ class MovieIn(BaseModel):
     release_date:str
     note_average: float
     poster_path:str
-    genres: List[int]
+    genres_id: List[int]
 
 
 class MovieOut(MovieIn):
     id: int
-
 
 class MovieUpdate(MovieIn):
     name: Optional[str] = None
